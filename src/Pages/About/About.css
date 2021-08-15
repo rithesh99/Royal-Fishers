@@ -1,0 +1,24 @@
+.about{
+    margin-top: 10vw;
+}
+.about__image{
+    width: 100%;
+    height: auto;
+    transition: 1s;
+}
+.about__image:hover {
+    width: 110%;
+    height: auto;
+
+}
+.about__side__heading{
+    text-align: center;
+    color: blue;
+    text-transform: uppercase;
+    text-decoration: underline;
+}
+.about__side__heading:hover {
+    /* text-transform: bold; */
+    color: darkblue;
+    font-weight: 700;
+}
