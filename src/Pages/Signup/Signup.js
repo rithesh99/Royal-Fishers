@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import logo from "../../Assets/logo.png";
 import ReactCrop from "react-image-crop";
-import "react-image-crop/dist/ReactCrop.css";
 import firebase from "firebase";
 
 const Signup = () => {

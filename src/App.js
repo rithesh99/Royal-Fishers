@@ -1,3 +1,5 @@
+import 'react-responsive-modal/styles.css';
+import "react-image-crop/dist/ReactCrop.css";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css"
 import Home from "./Pages/Home/Home";
@@ -19,7 +21,7 @@ import AdminRoute from "./RouteHelper/AdminRoute";
 firebase.initializeApp(firebaseConfig);
 
 function App() {
-  const [state,dispatch] = useStateValue();
+  const [state, dispatch] = useStateValue();
   useEffect(() => {
     dispatch({
       type: 'LOAD_CART'
