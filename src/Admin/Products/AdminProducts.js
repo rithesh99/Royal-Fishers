@@ -66,11 +66,13 @@ function AdminProducts() {
 
   const onSubmit = (event) => {
     event.preventDefault();
+    var id = nanoid(10);
     firebase
       .firestore()
       .collection("products")
-      .add({
-        id: nanoid(10),
+      .doc(id)
+      .set({
+        id: id,
         name: name,
         original_price: original_price,
         price: price,
