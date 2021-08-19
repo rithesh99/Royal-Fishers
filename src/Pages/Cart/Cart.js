@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import Vid from "../../Assets/Fish.mp4";
 
 function Cart() {
-  const [state,dispatch] = useStateValue();
+  const [state, dispatch] = useStateValue();
 
   // const loadCart = () => {
   //   if (typeof window !== undefined) {
@@ -20,22 +20,22 @@ function Cart() {
   const totalCart = () => {
     var sum = 0;
     for (let index = 0; index < state.cart.length; index++) {
-      sum = sum + state.cart[index].price;
+      sum = sum + parseInt(state.cart[index].price);
     }
-    return sum
+    return sum;
   };
 
   const saveToday = () => {
     var sum = 0;
     for (let index = 0; index < state.cart.length; index++) {
-      sum = sum + state.cart[index].price;
+      sum = sum + parseInt(state.cart[index].price);
     }
     var org_total = 0;
     for (let index = 0; index < state.cart.length; index++) {
-      org_total = org_total + state.cart[index].orginal_price;
+      org_total = org_total + parseInt(state.cart[index].orginal_price);
     }
-    return org_total-sum
-  }
+    return org_total - sum;
+  };
 
   const [products, setProducts] = useState([]);
 
@@ -49,46 +49,78 @@ function Cart() {
   }, []);
 
   return (
-    <div class="showcase">
-        <video src={Vid} muted loop autoPlay></video>
-        <div class="overlay"></div>
+    <div class='showcase'>
+      <video src={Vid} muted loop autoPlay></video>
+      <div class='overlay'></div>
+      {totalCart() > 0 ? (
+        <div className='cart'>
+          <h1 className='text-white text'>
+            Cart{" "}
+            {state.cart && state.cart.length > 0 && (
+              <span
+                style={{ fontSize: "13px " }}
+                className='badge badge-primary'
+              >
+                {state.cart.length}
+              </span>
+            )}
+          </h1>
 
-    <div className="cart">
-
-      
-      <h1 className="text-white text">Cart {
-            state.cart && state.cart.length>0 &&
-<span style={{fontSize:"13px "}} className="badge badge-primary">{state.cart.length}</span>
-          }</h1>
-      
-      <Link to="/" className="badge badge-light text">Home</Link><span> | </span><Link to="/orders" className="badge badge-light text">Orders</Link>
-      <div className="row">
-        <div className="col-12 col-md-7">
-          <div className="row">
-            {state.cart &&
-              state.cart.map((product, index) => (
-                <div className="col-6 col-md-3" >
-                  <Product
-                    index={index}
-                    name={product.name}
-                    orginal_price={product.orginal_price}
-                    price={product.price}
-                    removeFromCart={true}
-                    addtoCart={false}
-                    img={product.image}
-                  />
-                </div>
-              ))}
+          <Link to='/' className='badge badge-light text'>
+            Home
+          </Link>
+          <span> | </span>
+          <Link to='/orders' className='badge badge-light text'>
+            Orders
+          </Link>
+          <div className='row'>
+            <div className='col-12 col-md-7'>
+              <div className='row'>
+                {state.cart &&
+                  state.cart.map((product, index) => (
+                    <div className='col-6 col-md-3'>
+                      <Product
+                        index={index}
+                        name={product.name}
+                        orginal_price={product.orginal_price}
+                        price={product.price}
+                        removeFromCart={true}
+                        addtoCart={false}
+                        img={product.image}
+                      />
+                    </div>
+                  ))}
+              </div>
+            </div>
+            <div className='col-12 col-md-5 text-center text mt-4'>
+              <h3>Total: ₹ {totalCart()}</h3>
+              <h4 className='text-white'>You save ₹ {saveToday()}</h4>
+              <div className='mt-4'>
+                <button className='btn btn-outline-danger btn-block'>
+                  Checkout
+                </button>
+              </div>
+              <div className=''>
+                
+              </div>
+            </div>
           </div>
         </div>
-        <div className="col-12 col-md-5 text-center text mt-4">
-          <h3>Total: ₹ {totalCart()}</h3>
-          <h4 className="text-white">You save ₹ {saveToday()}</h4>
+      ) : (
+        <div className='text '>
+           <Link to='/' className='badge badge-light text'>
+            Home
+          </Link>
+          <span> | </span>
+          <Link to='/orders' className='badge badge-light text'>
+            Orders
+          </Link>
+          <h1 className='text-white'>Empty cart</h1>
+          <h4 className='text-white'><i>Go out and buy some fresh fishes to make your day more tastier!!!</i></h4>
         </div>
-      </div>
-    </div>
-    </div>
+      )}
 
+    </div>
   );
 }
 
