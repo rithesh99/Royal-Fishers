@@ -1,82 +1,27 @@
 import React, { useEffect, useState } from "react";
 import Product from "./Product/Product";
 import "./Products.css";
-import Fish from "../../Assets/fish4.jpg";
 import SearchIcon from "@material-ui/icons/Search";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { useStateValue } from "../../State/StateProvider";
 import { Link } from "react-router-dom";
+import firebase from "firebase";
 
 function Products() {
   const [state, dispatch] = useStateValue();
-
+  const [products, setProducts] = useState([])
+  useEffect(() => {
+    async function fetchUsers() {
+      await firebase.firestore().collection("products").onSnapshot((snapshot) =>
+        setProducts(snapshot.docs.map((doc) => doc.data()))
+      );
+    }
+    fetchUsers()
+    loadCart();
+    console.log(products)
+  }, [])
   const [search, setSearch] = useState("");
-  const Pros = [
-    {
-      id: 1,
-      name: "Kanava",
-      original_price: 199,
-      price: 149,
-      img: `${Fish}`,
-      quantity: "10 pieces",
-    },
-    {
-      id: 2,
-      name: "Saalai",
-      original_price: 99,
-      price: 49,
-      img: `${Fish}`,
-      quantity: "10 pieces",
-    },
-    {
-      id: 3,
-      name: "Nethili",
-      original_price: 199,
-      price: 149,
-      img: `${Fish}`,
-      quantity: "10 pieces",
-    },
-    {
-      id: 4,
-      name: "Karvaad",
-      original_price: 199,
-      price: 149,
-      img: `${Fish}`,
-      quantity: "10 pieces",
-    },
-    {
-      id: 5,
-      name: "Koli Saalai",
-      original_price: 199,
-      price: 149,
-      img: `${Fish}`,
-      quantity: "10 pieces",
-    },
-    {
-      id: 6,
-      name: "Rawl",
-      original_price: 199,
-      price: 149,
-      img: `${Fish}`,
-      quantity: "10 pieces",
-    },
-    {
-      id: 7,
-      name: "Nandu",
-      original_price: 199,
-      price: 149,
-      img: `${Fish}`,
-      quantity: "10 pieces",
-    },
-    {
-      id: 8,
-      name: "Paarai",
-      original_price: 199,
-      price: 149,
-      img: `${Fish}`,
-      quantity: "10 pieces",
-    },
-  ];
+ 
   const loadCart = () => {
     if (typeof window !== undefined) {
       if (localStorage.getItem("cart")) {
@@ -84,9 +29,6 @@ function Products() {
       }
     }
   };
-  useEffect(() => {
-    loadCart();
-  }, []);
 
   return (
     <div id='products' className='products container '>
@@ -122,7 +64,7 @@ function Products() {
         </div>
       </div>
       <div className='row'>
-        {Pros.filter((val) => {
+        {products.filter((val) => {
           if (search == "") {
             return val;
           } else if (val.name.toLowerCase().includes(search.toLowerCase())) {
