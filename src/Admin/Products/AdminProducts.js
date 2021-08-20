@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./AdminProducts.css";
-import Fish from "../../Assets/fish4.jpg";
 import { Modal } from 'react-responsive-modal';
 import ReactCrop from "react-image-crop";
 import firebase from "firebase";
@@ -10,6 +9,8 @@ import { nanoid } from 'nanoid'
 function AdminProducts() {
 
   const [products, setProducts] = useState([])
+  const [isAdd, setIsAdd] = useState(false)
+
   useEffect(() => {
     async function fetchUsers() {
       await firebase.firestore().collection("products").onSnapshot((snapshot) =>
@@ -23,6 +24,7 @@ function AdminProducts() {
 
   const [open, setOpen] = useState(false);
 
+  const [id, setId] = useState(null);
   const [name, setName] = useState(null);
   const [original_price, setOriginalPrice] = useState(null);
   const [img, setImg] = useState(null);
@@ -64,15 +66,15 @@ function AdminProducts() {
     setImg(base64Image);
   }
 
-  const onSubmit = (event) => {
-    event.preventDefault();
-    var id = nanoid(10);
+  const onSubmit = (isUpdate) => {
+    // event.preventDefault();
+    var uid = isUpdate ? id : nanoid(10);
     firebase
       .firestore()
       .collection("products")
-      .doc(id)
+      .doc(uid)
       .set({
-        id: id,
+        id: uid,
         name: name,
         original_price: original_price,
         price: price,
@@ -89,6 +91,7 @@ function AdminProducts() {
         setImg(null);
         setQuantity(null);
         setPrice(null);
+        setId(null);
         onCloseModal();
       });
   }
@@ -96,7 +99,23 @@ function AdminProducts() {
 
 
 
-  const onOpenModal = () => setOpen(true);
+  const onOpenModal = () => {
+    setOpen(true)
+    setIsAdd(true)
+  };
+  const onOpenModalForUpdate = (product) => {
+    setOpen(true)
+    setIsAdd(false)
+    setResult(null);
+    setImage(null)
+    selectedFile(null);
+    setName(product.name);
+    setOriginalPrice(product.original_price);
+    setImg(product.img);
+    setQuantity(product.quantity);
+    setPrice(product.price);
+    setId(product.id);
+  };
   const onCloseModal = () => setOpen(false);
 
   return (
@@ -124,7 +143,7 @@ function AdminProducts() {
 
 
             <div className='signup__profile__pic'>
-              {src ? (
+              {src || !isAdd ? (
                 <div className='addpost__image'>
                   {src && (
                     <div className='addpost__src'>
@@ -147,7 +166,7 @@ function AdminProducts() {
                       </div>
                     </div>
                   )}
-                  {result && (
+                  {(result || !isAdd) && (
                     <div className='addpost__result text-center pb-2'>
                       <h1>Selected image</h1>
                       <img src={img} alt='' className='addpost__photo' />
@@ -188,11 +207,11 @@ function AdminProducts() {
 
                       <button
                         type='submit'
-                        onClick={onSubmit}
+                        onClick={() => onSubmit(true)}
                         disabled={(src && !result) || (!name || !price || !original_price || !quantity)}
                         className='btn btn-block btn-primary'
                       >
-                        Add
+                        {isAdd ? "Add" : "Update"}
                       </button>
 
                     </div>
@@ -235,7 +254,7 @@ function AdminProducts() {
                       <strike className='pr-2'>{product.original_price}</strike>{" "}
                       ₹ {product.price}
                     </p>
-                    <button className='btn btn-block btn-warning'>
+                    <button className='btn btn-block btn-warning' onClick={() => onOpenModalForUpdate(product)}>
                       Update
                     </button>
                     <button className='btn btn-block btn-danger'>Delete</button>
