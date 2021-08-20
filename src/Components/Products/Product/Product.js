@@ -2,11 +2,11 @@ import React from "react";
 import "./Product.css";
 import { useStateValue } from "../../../State/StateProvider";
 
-function Product({ id, name,  addtoCart = true,removeFromCart = false,orginal_price, price, img, quantity }) {
-  const [state,dispatch] = useStateValue();
+function Product({ id, name, addtoCart = true, removeFromCart = false, orginal_price, price, img, quantity }) {
+  const [state, dispatch] = useStateValue();
 
-  
-   const removeItemFromCart = (productId) => {
+
+  const removeItemFromCart = (productId) => {
     dispatch({
       type: 'REMOVE_FROM_CART',
       name: productId
@@ -27,24 +27,23 @@ function Product({ id, name,  addtoCart = true,removeFromCart = false,orginal_pr
           // console.log("AFTER", cart);
           break;
         }
-        
+
       }
-    
+
       localStorage.setItem("cart", JSON.stringify(cart));
     }
     return cart;
   };
- 
 
- const cartEmpty = (next) => {
-  dispatch({
-    type: 'EMPTY_CART',
-  })
-  if (typeof window !== undefined) {
-    localStorage.removeItem("cart");
-    next();
-  }
-};
+
+  const cartEmpty = () => {
+    dispatch({
+      type: 'EMPTY_CART',
+    })
+    if (typeof window !== undefined) {
+      localStorage.removeItem("cart");
+    }
+  };
 
   const item = {
     id: id,
@@ -67,39 +66,39 @@ function Product({ id, name,  addtoCart = true,removeFromCart = false,orginal_pr
     console.log(state)
     let cart = [];
     console.log(item)
-  if (typeof window !== undefined) {
-    if (localStorage.getItem("cart")) {
-      cart = JSON.parse(localStorage.getItem("cart"));
+    if (typeof window !== undefined) {
+      if (localStorage.getItem("cart")) {
+        cart = JSON.parse(localStorage.getItem("cart"));
+      }
+      cart.push({
+        ...item,
+        count: 1,
+      });
+      localStorage.setItem("cart", JSON.stringify(cart));
     }
-    cart.push({
-      ...item,
-      count: 1,
-    });
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }
-};
- const showAddToCart = (addtoCart) => {
-   return (
-     addtoCart && (
-       <button onClick={addToCart} class="btn btn-outline-primary">
-         Add to cart
-       </button>
-     )
-   );
- };
+  };
+  const showAddToCart = (addtoCart) => {
+    return (
+      addtoCart && (
+        <button onClick={addToCart} class="btn btn-outline-primary">
+          Add to cart
+        </button>
+      )
+    );
+  };
 
- const showRemoveFromCart = (removeFromCart) => {
-   return (
-     removeFromCart && (
-       <button
-         onClick={() => { removeItemFromCart(name) }}
-         className="btn btn-outline-danger"
-       >
-         Remove from cart
-       </button>
-     )
-   );
- };
+  const showRemoveFromCart = (removeFromCart) => {
+    return (
+      removeFromCart && (
+        <button
+          onClick={() => { removeItemFromCart(name) }}
+          className="btn btn-outline-danger"
+        >
+          Remove from cart
+        </button>
+      )
+    );
+  };
   return (
     <div class="card text-center rounded mt-4" index={id}>
       <img class="card-img-top" src={img} alt="Card image cap" />

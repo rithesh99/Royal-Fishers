@@ -1,80 +1,100 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import "./Orders.css";
 import Fish from "../../Assets/fish4.jpg";
 import Product from "../../Components/Products/Product/Product";
 import OrderCard from '../../Components/Products/Product/OrderCard';
 import { Link } from 'react-router-dom';
+import firebase from "firebase";
+import { isAuthenticated } from '../../RouteHelper';
 
 function Orders() {
 
-    const Ordered = [
-        {
-          id: 1,
-          name: "Kanava",
-         status: "RECEIVED",
-          price: 149,
-          img: `${Fish}`,
-          quantity: "10 pieces",
-        },
-        {
-          id: 2,
-          name: "Saalai",
-          status: "DELIVERED",
-          price: 49,
-          img: `${Fish}`,
-          quantity: "10 pieces",
-        },
-        {
-          id: 1,
-          name: "Kanava",
-         status: "CANCELLED",
-          price: 149,
-          img: `${Fish}`,
-          quantity: "10 pieces",
-        },
-        {
-          id: 2,
-          name: "Saalai",
-          status: "ARRIVING",
-          price: 49,
-          img: `${Fish}`,
-          quantity: "10 pieces",
-        },
-        {
-          id: 2,
-          name: "Saalai",
-          status: "ARRIVING",
-          price: 49,
-          img: `${Fish}`,
-          quantity: "10 pieces",
-        }
-        
-      ];
-    return (
-        <div className="orders p-4">
-          <h1 className="text-black text">My Orders</h1>
-          <Link to="/" className="badge badge-light text">Home</Link><span> | </span><Link to="/cart" className="badge badge-light text">Cart</Link>
+  const [orders, setOrders] = useState([])
+  const user = isAuthenticated()
+  useEffect(() => {
+    async function fetchOrders() {
+      await firebase.firestore().collection("orders").onSnapshot((snapshot) =>
+        setOrders(snapshot.docs.map((doc) => doc.data()))
+      );
+    }
+    fetchOrders()
+  }, [])
 
-            <div className="row">
-            {Ordered &&
-              Ordered.map((order, index) => (
-                  
-                <div className="col-6 col-md-3" >
-                    {/* {console.log(order)} */}
-                  <OrderCard
-                    index={index}
-                    name={order.name}
-                    orginal_price={order.original_price}
-                    price={order.price}
-                    status={order.status}
-                    img={Fish}
-                  />
-                  
-                </div>
-              ))}
+
+  const Ordered = [
+    {
+      id: 1,
+      name: "Kanava",
+      status: "RECEIVED",
+      price: 149,
+      img: `${Fish}`,
+      quantity: "10 pieces",
+    },
+    {
+      id: 2,
+      name: "Saalai",
+      status: "DELIVERED",
+      price: 49,
+      img: `${Fish}`,
+      quantity: "10 pieces",
+    },
+    {
+      id: 1,
+      name: "Kanava",
+      status: "CANCELLED",
+      price: 149,
+      img: `${Fish}`,
+      quantity: "10 pieces",
+    },
+    {
+      id: 2,
+      name: "Saalai",
+      status: "ARRIVING",
+      price: 49,
+      img: `${Fish}`,
+      quantity: "10 pieces",
+    },
+    {
+      id: 2,
+      name: "Saalai",
+      status: "ARRIVING",
+      price: 49,
+      img: `${Fish}`,
+      quantity: "10 pieces",
+    }
+
+  ];
+  return (
+    <div className="orders p-4 bg-dark ">
+      <h1 className="text-white text">My Orders</h1>
+      <Link to="/" className="badge badge-light text">Home</Link><span> | </span><Link to="/cart" className="badge badge-light text">Cart</Link>
+
+      <div className="row">
+        {orders &&
+          orders.filter((val) => {
+            return val.loggedInEmail == user.email;
+          }).map((order, index) => (
+
+            <div className="col-6" >
+              {/* {console.log(order)} */}
+              <OrderCard
+                index={index}
+                name={order.name}
+                address={order.address}
+                landmark={order.landmark}
+                phone={order.phone}
+                saved={order.saved}
+                order={order.order}
+                timestamp={order.timestamp}
+                status={order.status}
+                total={order.total}
+              />
+
             </div>
-        </div>
-    )
+          ))}
+      </div>
+    </div>
+  )
 }
 
 export default Orders
