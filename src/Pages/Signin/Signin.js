@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import logo from "../../Assets/logo.png";
-import './styles.css'
+import "./styles.css";
 import firebase from "firebase";
 import { authenticate } from "../../RouteHelper";
 
@@ -12,38 +12,47 @@ const Signin = () => {
     error: "",
   });
 
-
   const { email, password, error } = values;
 
-  const handleChange = name => event => {
+  const handleChange = (name) => (event) => {
     setValues({ ...values, error: false, [name]: event.target.value });
   };
 
-  const onSubmit = event => {
+  const onSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, error: false, loading: true });
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(async data => {
-          await firebase.firestore().collection("users").onSnapshot((snapshot) =>
-            performRedirect(snapshot.docs.map((doc) => doc.data()).filter(user => user.email===email))
-        );
+      .then(async (data) => {
+        await firebase
+          .firestore()
+          .collection("users")
+          .onSnapshot((snapshot) =>
+            performRedirect(
+              snapshot.docs
+                .map((doc) => doc.data())
+                .filter((user) => user.email === email)
+            )
+          );
       })
-      .catch(err => {
+      .catch((err) => {
         setValues({ ...values, error: err.message });
       });
   };
 
   const performRedirect = (user) => {
-    authenticate(user[0])
+    authenticate(user[0]);
     if (user[0].role === 1) {
-      return <Redirect to={{ pathname: "/admin", state: window.location.href.slice(21) }} />;
+      return (
+        <Redirect
+          to={{ pathname: "/admin", state: window.location.href.slice(21) }}
+        />
+      );
     } else {
-      return <Redirect to={{ pathname: "/", state: window.location.href }}/>;
+      return <Redirect to={{ pathname: "/", state: window.location.href }} />;
     }
   };
-
 
   const errorMessage = () => {
     return (
@@ -60,16 +69,11 @@ const Signin = () => {
     );
   };
 
-
   const signInForm = () => {
     return (
       <div className="login ">
         <Link to="/">
-          <img
-            className="login__logo"
-            src={logo}
-            alt=""
-          />
+          <img className="login__logo" src={logo} alt="" />
         </Link>
 
         <div className="login__container">
@@ -77,11 +81,7 @@ const Signin = () => {
 
           <form>
             <h5>E-mail</h5>
-            <input
-              type="text"
-              value={email}
-              onChange={handleChange("email")}
-            />
+            <input type="text" value={email} onChange={handleChange("email")} />
 
             <h5>Password</h5>
             <input
@@ -100,7 +100,8 @@ const Signin = () => {
           </form>
 
           <p>
-            By continuing, you agree to Royal Fisher's Conditions of Use and Privacy Notice.
+            By continuing, you agree to Royal Fisher's Conditions of Use and
+            Privacy Notice.
           </p>
 
           <p className="text-center">
@@ -112,7 +113,8 @@ const Signin = () => {
             </button>
           </Link>
         </div>
-      </div>);
+      </div>
+    );
   };
 
   return (

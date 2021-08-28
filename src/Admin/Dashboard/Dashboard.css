@@ -1,11 +1,11 @@
-.admin__logo{
-    width: 250px;
-    height: auto;
+.admin__logo {
+  width: 250px;
+  height: auto;
 }
-.admin__logo__user{
-    width: 100%;
-    height: 250px;
+.admin__logo__user {
+  width: 100%;
+  height: 250px;
 }
-.admin__heading{
-    font-weight: 600;
+.admin__heading {
+  font-weight: 600;
 }

@@ -1,14 +1,14 @@
-body{
-    --primary-color: #0792e9;
-    --primary-background: #bbbbbb;
+body {
+  --primary-color: #0792e9;
+  --primary-background: #bbbbbb;
 }
 
 .app {
-    /* display: flex; */
-    /* justify-content: space-around; */
-    height: auto;
-    max-width: 1440px;
-     margin-left: auto;
-    margin-right: auto;
-    /* padding: 0 10px; */
+  /* display: flex; */
+  /* justify-content: space-around; */
+  height: auto;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  /* padding: 0 10px; */
 }

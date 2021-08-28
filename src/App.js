@@ -1,7 +1,7 @@
-import 'react-responsive-modal/styles.css';
+import "react-responsive-modal/styles.css";
 import "react-image-crop/dist/ReactCrop.css";
 import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./Pages/Home/Home";
 import { BrowserRouter, Route } from "react-router-dom";
 import Cart from "./Pages/Cart/Cart";
@@ -14,7 +14,7 @@ import Dashboard from "./Admin/Dashboard/Dashboard";
 import Users from "./Admin/Users/Users";
 import AdminProducts from "./Admin/Products/AdminProducts";
 import AdminOrders from "./Admin/Orders/AdminOrders";
-import firebase from "firebase/app"
+import firebase from "firebase/app";
 import { firebaseConfig } from "./Utils/firebase";
 import AdminRoute from "./RouteHelper/AdminRoute";
 
@@ -24,9 +24,9 @@ function App() {
   const [state, dispatch] = useStateValue();
   useEffect(() => {
     dispatch({
-      type: 'LOAD_CART'
-    })
-  }, [])
+      type: "LOAD_CART",
+    });
+  }, []);
 
   return (
     <div className="app">
@@ -41,8 +41,6 @@ function App() {
         <AdminRoute exact component={Users} path="/admin/users" />
         <AdminRoute exact component={AdminProducts} path="/admin/products" />
         <AdminRoute exact component={AdminOrders} path="/admin/orders" />
-
-
       </BrowserRouter>
     </div>
   );

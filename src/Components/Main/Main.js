@@ -7,15 +7,19 @@ import { Link } from "react-router-dom";
 
 function Main() {
   var isAuthenticated = true;
- const [profile, setProfile] = useState(true)
+  const [profile, setProfile] = useState(true);
   return (
     <div>
       <section class="showcase">
         <header>
           <div className=""></div>
-          <img src={Img} style={{ width: "40px" }} alt=""/>
+          <img src={Img} style={{ width: "40px" }} alt="" />
           {/* <h2 class="logo">Royal Fishes</h2> */}
-          <img src={Img} style={{ width: "40px", transform: "scaleX(-1)" }} alt="" />
+          <img
+            src={Img}
+            style={{ width: "40px", transform: "scaleX(-1)" }}
+            alt=""
+          />
           {isAuthenticated ? (
             <div className="main__profile__icon">
               <AccountCircleIcon
@@ -23,14 +27,15 @@ function Main() {
                 style={{ fontSize: "40px" }}
                 onClick={() => setProfile(true)}
               />
-              <br/>
-              {profile && 
-              <div className="main__profile__icon">
-              <div>Rithesh</div>
-              <div  onClick={() => setProfile(false)} className="badge">Signout</div>
-              </div>
-              }
-              
+              <br />
+              {profile && (
+                <div className="main__profile__icon">
+                  <div>Rithesh</div>
+                  <div onClick={() => setProfile(false)} className="badge">
+                    Signout
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
             <div className="text-center">
@@ -40,12 +45,14 @@ function Main() {
               <br />
               <span>
                 <small className="font-weight-bold text-warning">
-                  <Link to="/signin" className=" text-warning">Sign in</Link>
+                  <Link to="/signin" className=" text-warning">
+                    Sign in
+                  </Link>
                 </small>
               </span>
             </div>
           )}
-          {/* <div class="toggle"></div> */} 
+          {/* <div class="toggle"></div> */}
         </header>
         <video src={Vid} muted loop autoPlay></video>
         <div class="overlay"></div>

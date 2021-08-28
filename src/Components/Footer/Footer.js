@@ -4,10 +4,9 @@ import HomeIcon from "@material-ui/icons/Home";
 import BugReportIcon from "@material-ui/icons/BugReport";
 import InfoIcon from "@material-ui/icons/Info";
 import PhoneIcon from "@material-ui/icons/Phone";
-import Gp from "../../Assets/google-pay.png"
+import Gp from "../../Assets/google-pay.png";
 import Pp from "../../Assets/phone-pe.png";
 import Upi from "../../Assets/UPI.png";
-
 
 function Footer() {
   return (
@@ -40,7 +39,6 @@ function Footer() {
           <a href="#products" className="footer__option">
             Mission
           </a>
-          
         </div>
         <div className="col-6 col-md-3  d-flex flex-column text-center">
           <h2 className="text-white">ORDERS & RETURNS</h2>

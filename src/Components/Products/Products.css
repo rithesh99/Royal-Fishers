@@ -1,15 +1,15 @@
-.products{
-    margin-top: 100vh;
+.products {
+  margin-top: 100vh;
 }
-.products__search{
-    padding: 10px 20px;
-    border-radius: 20px;
-    /* margin: 0 10px; */
-    width: none;
-    text-align: center;
-    width: 100%;
+.products__search {
+  padding: 10px 20px;
+  border-radius: 20px;
+  /* margin: 0 10px; */
+  width: none;
+  text-align: center;
+  width: 100%;
 }
 
-.products__search:focus{
-    outline-width: 0;
+.products__search:focus {
+  outline-width: 0;
 }
