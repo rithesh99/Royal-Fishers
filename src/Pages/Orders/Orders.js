@@ -21,49 +21,6 @@ function Orders() {
   }, [])
 
 
-  const Ordered = [
-    {
-      id: 1,
-      name: "Kanava",
-      status: "RECEIVED",
-      price: 149,
-      img: `${Fish}`,
-      quantity: "10 pieces",
-    },
-    {
-      id: 2,
-      name: "Saalai",
-      status: "DELIVERED",
-      price: 49,
-      img: `${Fish}`,
-      quantity: "10 pieces",
-    },
-    {
-      id: 1,
-      name: "Kanava",
-      status: "CANCELLED",
-      price: 149,
-      img: `${Fish}`,
-      quantity: "10 pieces",
-    },
-    {
-      id: 2,
-      name: "Saalai",
-      status: "ARRIVING",
-      price: 49,
-      img: `${Fish}`,
-      quantity: "10 pieces",
-    },
-    {
-      id: 2,
-      name: "Saalai",
-      status: "ARRIVING",
-      price: 49,
-      img: `${Fish}`,
-      quantity: "10 pieces",
-    }
-
-  ];
   return (
     <div className="orders p-4 bg-dark ">
       <h1 className="text-white text">My Orders</h1>

@@ -8,11 +8,16 @@ export const getCartTotal = (cart) =>
 
 export const reducer = (state, action) => {
   switch (action.type) {
-    
     case "ADD_TO_CART":
+      if (state.cart) {
+        return {
+          ...state,
+          cart: [...state.cart, action.payload],
+        };
+      }
       return {
         ...state,
-        cart: [...state.cart, action.payload],
+        cart: [action.payload],
       };
 
     case "EMPTY_CART":
@@ -23,18 +28,18 @@ export const reducer = (state, action) => {
     case "LOAD_CART":
       if (typeof window !== undefined) {
         if (localStorage.getItem("cart")) {
-            return {
-              ...state, 
-              cart: JSON.parse(localStorage.getItem("cart"))
-            }
+          return {
+            ...state,
+            cart: JSON.parse(localStorage.getItem("cart")),
+          };
         }
       }
       break;
     case "REMOVE_FROM_CART":
-      const cartItem = action.name
+      const cartItem = action.name;
       let newCart = [...state.cart];
 
-      if (cartItem){
+      if (cartItem) {
         for (let i = 0; i < newCart.length; i++) {
           const index = newCart.indexOf(newCart[i]);
           // console.log("index", index);
@@ -45,7 +50,6 @@ export const reducer = (state, action) => {
             // console.log("AFTER", cart);
             break;
           }
-          
         }
       } else {
         console.warn(
@@ -66,5 +70,4 @@ export const reducer = (state, action) => {
     default:
       return state;
   }
-
 };

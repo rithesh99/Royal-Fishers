@@ -101,13 +101,17 @@ function Product({ id, name, addtoCart = true, removeFromCart = false, orginal_p
   };
   return (
     <div class="card text-center rounded mt-4" index={id}>
-      <img class="card-img-top" src={img} alt="Card image cap" />
+      {img &&
+        <img class="card-img-top" src={img} alt="Card image cap" />
+      }
       <div class="card-body">
         <h5 class="card-title font-weight-bold">{name}</h5>
         <p>{quantity}</p>
-        <p class="card-text font-weight-bold text-small">
-          ₹ <strike className="pr-2">{orginal_price}</strike> ₹ {price}
-        </p>
+        {orginal_price &&
+          <p class="card-text font-weight-bold text-small">
+            ₹ <strike className="pr-2">{orginal_price}</strike> ₹ {price}
+          </p>
+        }
         {showAddToCart(addtoCart)}
         {showRemoveFromCart(removeFromCart)}
       </div>

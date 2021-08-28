@@ -1,9 +1,6 @@
 import React, { useEffect } from 'react';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
 import { Link } from 'react-router-dom'
 import "./Users.css"
-import { Height } from '@material-ui/icons';
 import { useState } from 'react';
 import firebase from "firebase"
 
@@ -16,16 +13,13 @@ function Users() {
             );
         }
         fetchUsers()
-        console.log(users)
     }, [])
-
 
     return (
         <div className="users bg-dark pt-4" style={{ minHeight: "100vh" }}>
             <h1 className="text-center text-white">All Users</h1>
             <div className="text-center mb-4">
                 <Link to="/" className="badge badge-primary mr-2">Home</Link>
-
                 <Link to="/admin/orders" className="badge badge-primary mr-2">Orders</Link>
                 <Link to="/admin/products" className="badge badge-primary mr-2">Products</Link>
                 <Link to="/admin/users" className="badge badge-primary">Users</Link>

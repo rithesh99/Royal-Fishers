@@ -120,6 +120,19 @@ function Cart() {
                       />
                     </div>
                   ))}
+                  {state.cart.length===1 &&
+                    <div className='col-6 col-md-3'>
+                    <Product
+                      index={123}
+                      name="Time to spice up the food... Add more items to cart!!!"
+                      orginal_price=""
+                      price=""
+                      removeFromCart={false}
+                      addtoCart={false}
+                      img="https://images.indianexpress.com/2018/07/fish-sustainanbel-759.jpg"
+                    />
+                  </div>
+                  }
               </div>
             </div>
             <div className='col-12 col-md-4 text-center text mt-4'>
